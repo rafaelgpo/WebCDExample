@@ -2,13 +2,16 @@ node {
   git url: 'https://github.com/rafaelgpo/WebCDExample.git'
 }
 
+
+
 pipeline {
     agent any
+  environment {
+        virtualPath = '/WebCDExample/' + env.BRANCH_NAME
+    }
     stages {
         stage('Example') {
             steps {
-                virtualPath = '/WebCDExample/' + env.BRANCH_NAME
-                physicalPath = 'C:\\inetpub\\WebCDExample\\'+env.BRANCH_NAME
                 echo virtualPath
             }
         }
