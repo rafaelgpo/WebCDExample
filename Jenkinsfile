@@ -4,15 +4,19 @@ node {
 
 pipeline {
     agent any
-    parameters {
-        string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
-      string(name: 'PERSON2', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
-    }
     stages {
         stage('Example') {
             steps {
-                echo "Hello ${params.PERSON}"
+                virtualPath = '/WebCDExample/' + env.BRANCH_NAME
+                physicalPath = 'C:\\inetpub\\WebCDExample\\'+env.BRANCH_NAME
+                echo virtualPath
             }
         }
     }
 }
+
+def addIisApplication(appName, appPoolName, virtualPath, physicalPath) {
+  iisAppCmd("add app /site.name:" + appName + " /path:" + virtualPath +" /physicalpath:"+physicalPath)
+  iisAppCmd("set app "+appName + virtualPath+" /applicationpool:" + appPoolName)
+}
+
