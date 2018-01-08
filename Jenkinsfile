@@ -3,13 +3,15 @@ node {
 }
 
 pipeline {
-    agent any
+    agent none
     stages { 
+      parameters {
+        string(name: 'virtualPath', defaultValue: '/WebCDExample/' + env.BRANCH_NAME, description: '')
+        string(name: 'physicalPath', defaultValue: 'C:\\inetpub\\WebCDExample\\'+env.BRANCH_NAME, description: '')
+      }
         stage('Example') {
             steps {
-                virtualPath = '/WebCDExample/' + env.BRANCH_NAME
-                physicalPath = 'C:\\inetpub\\WebCDExample\\'+env.BRANCH_NAME
-                addIisApplication('WebCDExample', 'WebCDExamplePool', virtualPath, physicalPath)
+                addIisApplication('WebCDExample', 'WebCDExamplePool', ${params.virtualPath}, ${params.physicalPath})
             }
         }
     }
