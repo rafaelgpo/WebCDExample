@@ -7,7 +7,9 @@ pipeline {
     stages { 
         stage('Example') {
             steps {
-                echo 'Hello World'
+                virtualPath = '/WebCDExample/' + env.BRANCH_NAME
+                physicalPath = 'C:\\inetpub\\WebCDExample\\'+env.BRANCH_NAME
+                addIisApplication('WebCDExample', 'WebCDExamplePool', virtualPath, physicalPath)
             }
         }
     }
