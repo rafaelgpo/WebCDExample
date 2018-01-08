@@ -3,7 +3,7 @@ node {
 }
 
 stage("Deploy web application") {
-  steps {
+  steps{
   virtualPath = '/WebCDExample/' + env.BRANCH_NAME
   physicalPath = 'C:\\inetpub\\WebCDExample\\'+env.BRANCH_NAME
   addIisApplication('WebCDExample', 'WebCDExamplePool', virtualPath, physicalPath)
